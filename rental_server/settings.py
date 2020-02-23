@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rental_services',  # added
     # 'rental_services.apps.RentalServicesConfig',  # added
     'users',  # added
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -123,7 +124,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 # added
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = 'rental_services main'
+LOGIN_URL = 'login'
+
+

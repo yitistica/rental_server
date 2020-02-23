@@ -1,0 +1,11 @@
+{% extends "users/base_interface.html" %}
+{% block content %}
+    <div class="content-section">
+        <h3>Logged Out 已登出</h3>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                <a class="ml-2" href="{% url 'login' %}">login again (重新登入) </a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}
