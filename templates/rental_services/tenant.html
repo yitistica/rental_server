@@ -1,0 +1,19 @@
+{% extends "rental_services/service_base.html" %}
+{%load static %}
+{% include "rental_services/_modal.html" %}
+{% load widget_tweaks %}
+
+{% block service_content_l0 %}
+<table>
+{% for result in results %}
+    <tr>
+        <td>{{ result.surname }}</td>
+        <td>{{ result.given_name }}</td>
+        <td>{{ result.nid_number }}</td>
+        <td>{{ result.gender }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<button class="create-book btn btn-primary" type="button" name="button">add customer</button>
+{% endblock service_content_l0 %}
+

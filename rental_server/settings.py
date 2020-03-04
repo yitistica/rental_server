@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'rental_services',  # added
     # 'rental_services.apps.RentalServicesConfig',  # added
     'users',  # added
-    'crispy_forms'
+    'crispy_forms',
+    'bootstrap_modal_forms',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -134,7 +136,7 @@ STATICFILES_DIRS = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'rental_services main'
-LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'services:service-main'
+LOGIN_URL = 'users:login'
 
 

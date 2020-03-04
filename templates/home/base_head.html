@@ -1,0 +1,28 @@
+{%load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Local Bootstrap CSS -->
+  	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+
+	<!-- side bar at home CSS -->
+  	<link rel="stylesheet" type="text/css" href="{% static 'base/simple-sidebar.css' %}">
+
+    {% if title %}
+      <title>{{ title }}</title>
+    {% else %}
+      <title>untitled</title>
+    {% endif %}
+  </head>
+
+    <body>
+	{% block content_l0 %}{% endblock content_l0 %}
+
+
+    {% block inner_js %} {% endblock inner_js %}
+    </body>
+</html>

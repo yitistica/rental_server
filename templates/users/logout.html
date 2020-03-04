@@ -1,5 +1,7 @@
 {% extends "users/base_interface.html" %}
-{% block content %}
+{% load crispy_forms_tags %}
+
+{% block login %}
     <div class="content-section">
         <h3>Logged Out 已登出</h3>
         <div class="border-top pt-3">
@@ -8,4 +10,4 @@
             </small>
         </div>
     </div>
-{% endblock content %}
+{% endblock login %}

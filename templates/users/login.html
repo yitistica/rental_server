@@ -1,7 +1,7 @@
-{% extends "users/base_interface.html" %}
+{% extends "users/user_base.html" %}
 {% load crispy_forms_tags %}
 
-{% block content %}
+{% block login %}
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
@@ -15,8 +15,8 @@
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-                Don't have an account (新用户) <a class="ml-2" href="{% url 'register' %}">Sign Up 注册</a>
+                Don't have an account (新用户) <a class="ml-2" href="{% url 'users:register' %}">Sign Up 注册</a>
             </small>
         </div>
     </div>
-{% endblock content %}
+{% endblock login %}
