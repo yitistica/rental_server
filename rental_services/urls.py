@@ -8,5 +8,8 @@ urlpatterns = [
     path('', views.dash_main, name='service-main'),
     path('tenant/', views.customer_main, name='tenant-main'),
     path('add_customer/', views.AddCustomerView.as_view(), name='add-customer'),
+
+    path('property/', views.property_main, name='property-main'),
+    path('contract/', views.property_main, name='contract-main'),
 ]
 

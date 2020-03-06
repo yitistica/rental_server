@@ -13,7 +13,7 @@
 		  <div class="list-group list-group-flush">
 			<a href="{%url 'services:service-main' %}" class="list-group-item list-group-item-action bg-light">控制台</a>
 			<a href="#" class="list-group-item list-group-item-action bg-light">月度管理</a>
-			<a href="#" class="list-group-item list-group-item-action bg-light">房屋信息</a>
+			<a href="{%url 'services:property-main' %}" class="list-group-item list-group-item-action bg-light">房屋信息</a>
 			<a href="{%url 'services:tenant-main' %}" class="list-group-item list-group-item-action bg-light">住户信息</a>
 			<a href="#" class="list-group-item list-group-item-action bg-light">通知</a>
 		  </div>
@@ -23,7 +23,7 @@
 		<!-- MAIN -->
 		<div id="page-content-wrapper">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-				<button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+				<button class="btn btn-secondary" id="menu-toggle">Toggle Menu</button>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
         		</button>
@@ -59,7 +59,6 @@
 
 				<div class="row">
 					{% block service_content_l0 %}{% endblock service_content_l0 %}
-					<button class="create-book btn btn-primary" type="button" name="button">add customer</button>
 				</div>
 			</div>
 
@@ -79,6 +78,10 @@
 	{% endif %}
 {% endblock content_l0 %}
 
+{% block inner_css %}
+{% block inner_css_l1 %}
+{% endblock inner_css_l1 %}
+{% endblock inner_css %}
 
 {% block inner_js %}
 <script type="text/javascript" src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
@@ -100,6 +103,49 @@ $(document).ready(function() {
         formURL: "{% url 'services:add-customer' %}"
     });
 });
+
+$(document).ready(function(){
+function stickySidebar(mainBlk, sidebarWrapper, sidebarBlk) {
+
+    var main = $(mainBlk); //Our sticky block will scroll next to this one
+
+    var stickyWrapper = $(sidebarWrapper); // General position relative wrapper for main and sticky block
+
+    var stickyBlk = $(sidebarBlk); // Our sticky block
+
+    var startPos = stickyBlk.offset().top; // Starting position where the block should stick
+
+    var finishPos = main.height() - stickyBlk.innerHeight(); // Starting position where the block should stick
+
+    stickyWrapper.height(main.height()); // Set height of sticky wrapper equal to the height of main block that we are scrolling next to
+
+    $(window).scroll(function(){
+      var currentScrollPos = $(document).scrollTop();  // Get current position of scroll
+      console.log(currentScrollPos)
+      if ((currentScrollPos > startPos) && (currentScrollPos <= finishPos)) { // Check if current scroll position is in range of main block height, add class stuck
+        stickyBlk.removeClass('bottom');
+        stickyBlk.addClass('stuck');
+      }
+      else if (currentScrollPos > finishPos) {
+        stickyBlk.removeClass('stuck');
+        stickyBlk.addClass('bottom');
+      }  // if block current scroll is further, add class bottom
+      else {
+        stickyBlk.removeClass('stuck');
+        stickyBlk.removeClass('bottom');
+      } // in other cases do nothing
+    });
+
+  };
+
+  stickySidebar ('.stick-next-to', '.sticky-wrapper', '.sticky');
+
+
+
+});
 </script>
+
+{% block inner_js_l1 %}
+{% endblock inner_js_l1 %}
 
 {% endblock inner_js %}

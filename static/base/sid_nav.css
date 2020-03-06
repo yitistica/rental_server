@@ -1,0 +1,25 @@
+.clearfix:after {
+  content:'';
+  display:block;
+  clear:both;
+}
+
+aside {
+  float: right;
+  width: 300px;
+}
+
+/* Sticky styles */
+.sticky-wrapper {
+  position: relative;
+}
+.sticky.stuck {
+  position: fixed;
+  top: 0;
+}
+.sticky.bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+/* Sticky styles end */

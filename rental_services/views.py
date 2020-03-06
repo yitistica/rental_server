@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .app_customer.customer_forms import AddCustomerForm
 from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView
-from .models import Customer
+from .models import Customer, RentalUnit
 
 from .utils.info_extract import nid_info_extract
 
@@ -56,5 +56,21 @@ class AddCustomerView(BSModalCreateView):
             form = AddCustomerForm()
         context = {"form": form}
         return render(request, self.template_name, context)
+
+
+def property_main(request):
+    query_results = RentalUnit.objects.all()
+
+    print(query_results)
+    context = {
+        'results': query_results
+    }
+    # all_fields = Customer._meta.get_fields()
+    # table = dict()
+    # for result in query_results:
+    #     for field in all_fields:
+    #         table[field] = result.field
+
+    return render(request, 'rental_services/property.html', context)
 
 

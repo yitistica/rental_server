@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from .base_models import SignedCommonInfo, Person, Contact
+from django.contrib.postgres.fields import JSONField
 # Create your models here.
 
 
@@ -30,6 +31,7 @@ class RentalUnit(SignedCommonInfo):
     rental_unit = models.CharField(max_length=100, blank=True)
     rental_block = models.CharField(max_length=100, blank=True)
     rental_address = models.CharField(max_length=100, blank=True)
+    rental_owner = models.ForeignKey(Owner, default=2, on_delete=models.SET_DEFAULT)
 
     def __str__(self):
         return f"{self.rental_block}_{self.rental_unit}"
@@ -45,6 +47,13 @@ class ContractTemplate(models.Model):
         return self.template_title
 
 
+class TermStructure(models.Model):
+    term_id = models.AutoField(primary_key=True, unique=True)
+    associate_template = models.ForeignKey(Customer, default=1, on_delete=models.SET_DEFAULT)
+    additional_provisions = models.TextField(blank=True)
+    regularity = JSONField()
+
+
 # operations
 class Contract(models.Model):
     contract_id = models.AutoField(primary_key=True, unique=True)
@@ -52,6 +61,5 @@ class Contract(models.Model):
     customer = models.ForeignKey(Customer, default=1, on_delete=models.SET_DEFAULT)
     effective_start_date = models.DateTimeField(null=True)
     effective_end_date = models.DateTimeField(null=True)
-    template = models.ForeignKey(ContractTemplate, default=1, on_delete=models.SET_DEFAULT)
-    additional_clauses = models.TextField(blank=True)
+    term_structure = models.ForeignKey(TermStructure, default=1, on_delete=models.SET_DEFAULT)
 
