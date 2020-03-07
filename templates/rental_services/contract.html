@@ -3,35 +3,44 @@
 
 
 {% block service_content_l0 %}
-<div class="col-7">
-
+<div class="col-10">
+    <!--    <div class="row">-->
+    <!--        <button class="create-book btn btn-secondary" type="button" name="button">创建合同模板</button>-->
+    <!--    </div>-->
+    <h3>合同模板列表</h3>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th scope="col">序号</th>
-            <th scope="col">单元</th>
-            <th scope="col">栋</th>
-            <th scope="col">地址</th>
-            <th scope="col">详细</th>
+            <th scope="col">模板号</th>
+            <th scope="col">创建时间</th>
+            <th scope="col">修订时间</th>
+            <th scope="col">模板名字</th>
+            <th scope="col">内容节选</th>
+            <th scope="col">修正</th>
         </tr>
         </thead>
         <tbody>
-        {% for i in '01234567891111111111111111' %}
-        {% for result in results %}
+        {% for template in contract_templates %}
         <tr>
-            <td>{{ result.rental_id }}</td>
-            <td>{{ result.rental_unit }}</td>
-            <td>{{ result.rental_block }}</td>
-            <td>{{ result.rental_address }}</td>
-            <td>修改</td>
+            <td>{{ template.template_id }}</td>
+            <td>{{ template.create_time }}</td>
+            <td>{{ template.update_time }}</td>
+            <td>{{ template.template_title }}</td>
+            <td>{{ template.template_document }}</td>
+            <td><a href="{%url 'services:contract-detail' template.template_id %}"><i class="fas fa-expand"></i></a>
+                <a href="{%url 'services:contract-update' template.template_id %}"><i class="fas fa-edit"></i></a>
+                <a href="{%url 'services:contract-delete' template.template_id %}"><i class="fas fa-trash-alt"></i></a></td>
         </tr>
+        {% endfor %}
         </tbody>
-        {% endfor %}
-        {% endfor %}
     </table>
-
+    <hr>
+    <a href="{%url 'services:contract-create' %}">
+        <button type="button" class="btn btn-primary btn-sm float-right" >创建模板</button>
+    </a>
 </div>
-<div class="col-3">
+
+<div class="col-2">
     <div class="wrapper clearfix">
         <aside class="sticky-wrapper">
             <nav class="sticky"></nav>

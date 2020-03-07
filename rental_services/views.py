@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .app_customer.customer_forms import AddCustomerForm
 from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView
-from .models import Customer, RentalUnit
-
+from .models import Customer, RentalUnit, ContractTemplate
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .utils.info_extract import nid_info_extract
-
+from django.contrib import messages
 
 # Create your views here.
 
@@ -73,4 +74,52 @@ def property_main(request):
 
     return render(request, 'rental_services/property.html', context)
 
+
+class ContractListView(ListView):
+    model = ContractTemplate
+    template_name = 'rental_services/contract.html'
+    context_object_name = 'contract_templates'
+    ordering = ['-update_time']
+    paginate_by = 10
+
+
+class ContractDetailView(DetailView):
+    model = ContractTemplate
+
+
+class ContractCreateView(LoginRequiredMixin, CreateView):
+    model = ContractTemplate
+    fields = ['template_title', 'template_document']
+
+    def form_valid(self, form):
+        form.instance.create_author = self.request.user
+        form.instance.update_author = self.request.user
+        return super().form_valid(form)
+
+
+class ContractUpdateView(LoginRequiredMixin, UpdateView):
+    model = ContractTemplate
+    fields = ['template_title', 'template_document']
+
+    def form_valid(self, form):
+        form.instance.update_author = self.request.user
+        return super().form_valid(form)
+
+
+def contract_template_delete(request, template_id):
+    item = ContractTemplate.objects.get(template_id=template_id)
+
+    if request.method == 'POST':
+        item.delete()
+        messages.warning(request, f'contract {template_id} is deleted.')
+
+    return redirect('services:contract-main')
+
+
+class ContractDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = ContractTemplate
+    success_url = reverse_lazy('services:contract-main')
+
+    def test_func(self):
+        return True
 

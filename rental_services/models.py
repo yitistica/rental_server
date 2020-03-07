@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from .base_models import SignedCommonInfo, Person, Contact
 from django.contrib.postgres.fields import JSONField
+from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your models here.
 
 
@@ -39,12 +41,18 @@ class RentalUnit(SignedCommonInfo):
 
 class ContractTemplate(models.Model):
     template_id = models.AutoField(primary_key=True, unique=True)
-    created_time = models.DateTimeField(auto_now=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+    create_author = models.ForeignKey(User, default=1, on_delete=models.SET_DEFAULT, related_name='create_author')
+    update_author = models.ForeignKey(User, default=1, on_delete=models.SET_DEFAULT, related_name='update_author')
     template_title = models.CharField(max_length=250)
     template_document = models.TextField(blank=True)
 
     def __str__(self):
         return self.template_title
+
+    def get_absolute_url(self):
+        return reverse('services:contract-detail', kwargs={'pk': self.pk})
 
 
 class TermStructure(models.Model):
