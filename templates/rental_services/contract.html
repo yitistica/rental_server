@@ -23,10 +23,10 @@
         {% for template in contract_templates %}
         <tr>
             <td>{{ template.template_id }}</td>
-            <td>{{ template.create_time }}</td>
-            <td>{{ template.update_time }}</td>
+            <td>{{ template.create_time_str }}</td>
+            <td>{{ template.update_time_str }}</td>
             <td>{{ template.template_title }}</td>
-            <td>{{ template.template_document }}</td>
+            <td>{{ template.short_template_str }}</td>
             <td><a href="{%url 'services:contract-detail' template.template_id %}"><i class="fas fa-expand"></i></a>
                 <a href="{%url 'services:contract-update' template.template_id %}"><i class="fas fa-edit"></i></a>
                 <a href="{%url 'services:contract-delete' template.template_id %}"><i class="fas fa-trash-alt"></i></a></td>

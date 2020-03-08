@@ -22,6 +22,9 @@
     <p>{{ object.template_document }}</p>
     <hr>
     <div class="float-right">
+        <a href="{%url 'services:contract-update' object.template_id %}">
+            <button type="button" class="btn btn-info btn-sm" >编辑</button>
+        </a>
         <a href="{%url 'services:contract-delete' object.template_id %}">
             <button type="button" class="btn btn-info btn-sm" >导出</button>
         </a>

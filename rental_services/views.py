@@ -7,7 +7,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .utils.info_extract import nid_info_extract
 from django.contrib import messages
-
+from rest_framework.generics import RetrieveAPIView
+from rest_framework import serializers
 # Create your views here.
 
 
@@ -75,12 +76,50 @@ def property_main(request):
     return render(request, 'rental_services/property.html', context)
 
 
+class ContractSerializer(serializers.ModelSerializer):
+    create_time_str = serializers.SerializerMethodField()
+    update_time_str = serializers.SerializerMethodField()
+    short_template_str = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ContractTemplate
+        fields = '__all__'
+
+    def get_create_time_str(self, obj):
+        return obj.create_time.strftime("%Y/%m/%d %H:%M")
+
+    def get_update_time_str(self, obj):
+        return obj.update_time.strftime("%Y/%m/%d %H:%M")
+
+    def get_short_template_str(self, obj):
+        if len(obj.template_document) > 100:
+            return obj.template_document[0:100] + '...'
+        else:
+            return obj.template_document
+
+
 class ContractListView(ListView):
     model = ContractTemplate
     template_name = 'rental_services/contract.html'
     context_object_name = 'contract_templates'
     ordering = ['-update_time']
-    paginate_by = 10
+    queryset = ContractTemplate.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contract_templates = context['contract_templates']
+        contract_templates = ContractSerializer(contract_templates, many=True)
+
+        context['contract_templates'] = contract_templates.data
+
+        # print(context[ContractListView.context_object_name].apply())
+        return context
+
+
+# class ContractListRetrieveAPIView(ListView):
+#     queryset = ContractTemplate.objects.all().order_by('-update_time')
+#     # serializer = ContractSerializer(queryset, many=True)
+#     template_name = 'rental_services/contract.html'
 
 
 class ContractDetailView(DetailView):
