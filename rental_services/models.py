@@ -65,9 +65,27 @@ class TermStructure(models.Model):
 # operations
 class Contract(models.Model):
     contract_id = models.AutoField(primary_key=True, unique=True)
-    owner = models.ForeignKey(Owner, default=1, on_delete=models.SET_DEFAULT)
+    rental_id = models.ForeignKey(RentalUnit, default=1, on_delete=models.SET_DEFAULT)
     customer = models.ForeignKey(Customer, default=1, on_delete=models.SET_DEFAULT)
     effective_start_date = models.DateTimeField(null=True)
     effective_end_date = models.DateTimeField(null=True)
     term_structure = models.ForeignKey(TermStructure, default=1, on_delete=models.SET_DEFAULT)
+    effective = models.BooleanField(default=True)
+
+
+class RegularityType(models.Model):
+    id = models.AutoField(primary_key=True, unique=True)
+    type = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
+
+
+class Usage(models.Model):
+    record_id = models.AutoField(primary_key=True, unique=True)
+    rental_id = models.ForeignKey(RentalUnit, default=1, on_delete=models.SET_DEFAULT)
+    regularity_type = models.ForeignKey(RegularityType, default=1, on_delete=models.SET_DEFAULT)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    usage = models.FloatField()
+
+
 
