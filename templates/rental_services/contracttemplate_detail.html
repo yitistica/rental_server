@@ -1,0 +1,43 @@
+{% extends "rental_services/service_base.html" %}
+{%load static %}
+
+
+{% block service_content_l0 %}
+<div class="col-11">
+
+    <h1 class="mt-4">{{ object.template_title }}</h1>
+
+    <hr>
+    <p class="lead">
+        序列：<a href="#">{{ object.template_id }}</a> <br />
+        创建：<a href="#">{{ object.create_author }}</a> <br />
+        修订：<a href="#">{{ object.update_author }}</a> <br />
+    </p>
+    <hr>
+    <!-- Date/Time -->
+    <p>创建时间{{ object.create_time }}</p>
+    <p>修订时间 {{ object.update_time }}</p>
+    <hr>
+    <!-- Post Content -->
+    <p>{{ object.template_document }}</p>
+    <hr>
+    <div class="float-right">
+        <a href="{%url 'services:contract-update' object.template_id %}">
+            <button type="button" class="btn btn-info btn-sm" >编辑</button>
+        </a>
+        <a href="{%url 'services:contract-delete' object.template_id %}">
+            <button type="button" class="btn btn-info btn-sm" >导出</button>
+        </a>
+        <a href="{%url 'services:contract-delete' object.template_id %}">
+            <button type="button" class="btn btn-danger btn-sm" >删除模板</button>
+        </a>
+    </div>
+</div>
+<div class="col-1">
+</div>
+
+{% endblock service_content_l0 %}
+
+{% block inner_css_l1 %}
+
+{% endblock inner_css_l1 %}
